@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Snakey Wakey", "Snakey Wakey\Snakey Wakey.vcxproj", "{12AC7964-0F9D-4CC9-8ED4-04C73652F3FE}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Snakey Wakey", "Snakey Wakey.vcxproj", "{12AC7964-0F9D-4CC9-8ED4-04C73652F3FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
