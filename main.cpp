@@ -3,19 +3,19 @@ using namespace std;
 bool gameOver;
 const int width = 20;
 const int height = 20;
-int x, y, fruitX, fruitY, score;
+int snakeX, snakeY, fruitX, fruitY, score;
 enum eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
 eDirection dir;
 
 void Setup()
 {
 	gameOver = false;
-	//dir = STOP;
-	//x = width / 2;
-	//y = height / 2;
-	//fruitX = rand() % width;
-	//fruitY = rand() % height;
-	//score = 0;
+	dir = STOP;
+	snakeX = width / 2;
+	snakeY = height / 2;
+	fruitX = rand() % width;
+	fruitY = rand() % height;
+	score = 0;
 }
 void Draw()
 {
@@ -27,8 +27,16 @@ void Draw()
 	{
 		for (int j = 0; j < width; j++)
 		{
+			//border
 			if (j == 0 || j == width - 1)
 				cout << "#";
+			//snake
+			else if (i == snakeY && j == snakeX)
+				cout << "S";
+			//fruit
+			else if (i == fruitY && j == fruitX)
+				cout << "O";
+			//empty space
 			else
 				cout << " ";
 		}
