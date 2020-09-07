@@ -1,16 +1,18 @@
 #include <iostream>
+#include <conio.h>
+
 using namespace std;
 bool gameOver;
 const int width = 20;
 const int height = 20;
 int snakeX, snakeY, fruitX, fruitY, score;
-enum eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
+enum class eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
 eDirection dir;
 
 void Setup()
 {
 	gameOver = false;
-	dir = STOP;
+	dir = eDirection::STOP;
 	snakeX = width / 2;
 	snakeY = height / 2;
 	fruitX = rand() % width;
@@ -49,7 +51,26 @@ void Draw()
 }
 void Input()
 {
-
+	if (_kbhit)
+	{
+		switch (_getch())
+		{
+			case 'a':
+				dir = eDirection::LEFT;
+				break;
+			case 'w':
+				dir = eDirection::UP;
+				break;
+			case 'd':
+				dir = eDirection::RIGHT;
+				break;
+			case 's':
+				dir = eDirection::DOWN;
+				break;
+			case 'q':
+				gameOver = true;
+		}
+	}
 }
 void Logic()
 {
