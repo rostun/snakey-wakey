@@ -22,15 +22,15 @@ void Setup()
 void Draw()
 {
 	system("cls");
-	for (int i = 0; i < width; i++)
+	for (int i = 0; i < width+2; i++)
 		cout << "#";
 	cout << endl;
 	for (int i = 0; i < height; i++)
 	{
-		for (int j = 0; j < width; j++)
+		for (int j = 0; j < width+2; j++)
 		{
 			//border
-			if (j == 0 || j == width - 1)
+			if (j == 0 || j == width+1)
 				cout << "#";
 			//snake
 			else if (i == snakeY && j == snakeX)
@@ -44,7 +44,7 @@ void Draw()
 		}
 		cout << endl;
 	}
-	for (int i = 0; i < width; i++)
+	for (int i = 0; i < width+2; i++)
 	{
 		cout << "#";
 	}	
@@ -92,6 +92,8 @@ void Logic()
 		default:
 			break;
 	}
+	if (snakeX > width)
+		gameOver = true;
 }
 int main()
 {
