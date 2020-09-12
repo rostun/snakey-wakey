@@ -69,12 +69,29 @@ void Input()
 				break;
 			case 'q':
 				gameOver = true;
+				break;
 		}
 	}
 }
 void Logic()
 {
-
+	switch (dir)
+	{
+		case eDirection::LEFT:
+			snakeX--;
+			break;
+		case eDirection::UP:
+			snakeY--;
+			break;
+		case eDirection::RIGHT:
+			snakeX++;
+			break;
+		case eDirection::DOWN:
+			snakeY++;
+			break;
+		default:
+			break;
+	}
 }
 int main()
 {
