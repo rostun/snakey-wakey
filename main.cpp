@@ -9,15 +9,20 @@ int snakeX, snakeY, fruitX, fruitY, score;
 enum class eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
 eDirection dir;
 
+void _generateFruit()
+{
+	fruitX = rand() % width;
+	fruitY = rand() % height;
+}
+
 void Setup()
 {
 	gameOver = false;
 	dir = eDirection::STOP;
 	snakeX = width / 2;
 	snakeY = height / 2;
-	fruitX = rand() % width;
-	fruitY = rand() % height;
 	score = 0;
+	_generateFruit();
 }
 void Draw()
 {
@@ -92,9 +97,17 @@ void Logic()
 		default:
 			break;
 	}
+	//if bounds are hit
 	if (snakeX > width || snakeX < 1 || snakeY > height - 1 || snakeY < 0)
 		gameOver = true;
+	//if fruit is eaten
+	if (snakeX == fruitX && snakeY == fruitY)
+	{
+		score++;
+		_generateFruit();
+	}
 }
+
 int main()
 {
 	Setup();
