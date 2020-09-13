@@ -92,7 +92,7 @@ void Logic()
 		default:
 			break;
 	}
-	if (snakeX > width)
+	if (snakeX > width || snakeX < 1 || snakeY > height - 1 || snakeY < 0)
 		gameOver = true;
 }
 int main()
