@@ -53,6 +53,9 @@ void Draw()
 	{
 		cout << "#";
 	}	
+	//score
+	cout << endl;
+	cout << "Score: " << score << endl;
 }
 void Input()
 {
