@@ -4,8 +4,9 @@
 using namespace std;
 bool gameOver;
 const int width = 20;
-const int height = 20;
+const int height = 10;
 int snakeX, snakeY, fruitX, fruitY, score;
+int tailX[100], tailY[100];
 enum class eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
 eDirection dir;
 
@@ -27,35 +28,46 @@ void Setup()
 void Draw()
 {
 	system("cls");
-	for (int i = 0; i < width+2; i++)
+	//first line
+	for (int col = 0; col < width + 2; col++)
 		cout << "#";
 	cout << endl;
-	for (int i = 0; i < height; i++)
+	for (int row = 0; row < height; row++)
 	{
-		for (int j = 0; j < width+2; j++)
+		for (int col = 0; col < width + 2; col++)
 		{
+			string symbol = " ";
 			//border
-			if (j == 0 || j == width+1)
-				cout << "#";
+			if (col == 0 || col == width + 1)
+				symbol = "#";
 			//snake
-			else if (i == snakeY && j == snakeX)
-				cout << "S";
+			else if (row == snakeX && col == snakeY)
+				symbol = "S";
 			//fruit
-			else if (i == fruitY && j == fruitX)
-				cout << "O";
-			//empty space
-			else
-				cout << " ";
+			else if (row == fruitX && col == fruitY)
+				symbol = "O";
+			//tail
+			//else
+			/*{
+				for (int t = 0; t < score; t++) 
+				{
+					if (i == tailX[t] && j == tailY[t])
+						symbol = '-';
+				}
+			}*/
+			
+			cout << symbol;
 		}
 		cout << endl;
 	}
-	for (int i = 0; i < width+2; i++)
+	for (int col = 0; col < width + 2; col++)
 	{
 		cout << "#";
 	}	
 	//score
 	cout << endl;
 	cout << "Score: " << score << endl;
+	cout << "x: " << fruitX << " y: " << fruitY << endl;
 }
 void Input()
 {
@@ -101,11 +113,13 @@ void Logic()
 			break;
 	}
 	//if bounds are hit
-	if (snakeX > width || snakeX < 1 || snakeY > height - 1 || snakeY < 0)
+	if (snakeX > width || snakeY > height + 2)
 		gameOver = true;
 	//if fruit is eaten
 	if (snakeX == fruitX && snakeY == fruitY)
 	{
+		tailX[score] = fruitX;
+		tailY[score] = fruitY;
 		score++;
 		_generateFruit();
 	}
