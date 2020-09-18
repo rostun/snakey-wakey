@@ -12,8 +12,8 @@ eDirection dir;
 
 void _generateFruit()
 {
-	fruitX = rand() % width;
-	fruitY = rand() % height;
+	fruitX = rand() % width + 1;
+	fruitY = rand() % height + 1;
 }
 
 void Setup()
@@ -29,45 +29,42 @@ void Draw()
 {
 	system("cls");
 	//first line
-	for (int col = 0; col < width + 2; col++)
+	for (int colx = 0; colx < width + 2; colx++)
 		cout << "#";
 	cout << endl;
-	for (int row = 0; row < height; row++)
+	for (int rowy = 1; rowy < height + 1; rowy++)
 	{
-		for (int col = 0; col < width + 2; col++)
+		for (int colx = 0; colx < width + 2; colx++)
 		{
 			string symbol = " ";
+			//tail
+			for (int tail = 0; tail < score; tail++)
+			{
+				if (colx == tailX[tail] && rowy == tailY[tail])
+					symbol = '-';
+			}
 			//border
-			if (col == 0 || col == width + 1)
+			if (colx == 0 || colx == width + 1)
 				symbol = "#";
 			//snake
-			else if (row == snakeX && col == snakeY)
+			else if (colx == snakeX && rowy == snakeY)
 				symbol = "S";
 			//fruit
-			else if (row == fruitX && col == fruitY)
+			else if (colx == fruitX && rowy == fruitY)
 				symbol = "O";
-			//tail
-			//else
-			/*{
-				for (int t = 0; t < score; t++) 
-				{
-					if (i == tailX[t] && j == tailY[t])
-						symbol = '-';
-				}
-			}*/
-			
 			cout << symbol;
 		}
 		cout << endl;
 	}
-	for (int col = 0; col < width + 2; col++)
+	for (int colx = 0; colx < width + 2; colx++)
 	{
 		cout << "#";
 	}	
 	//score
 	cout << endl;
 	cout << "Score: " << score << endl;
-	cout << "x: " << fruitX << " y: " << fruitY << endl;
+	cout << "[SNAKE] rowx: " << snakeX << " [SNAKE] coly: " << snakeY << endl;
+	cout << "[FRUIT] rowx: " << fruitX << " [FRUIT] coly: " << fruitY << endl;
 }
 void Input()
 {
@@ -113,7 +110,7 @@ void Logic()
 			break;
 	}
 	//if bounds are hit
-	if (snakeX > width || snakeY > height + 2)
+	if (snakeX > width || snakeY > height || snakeX < 1 || snakeY < 1)
 		gameOver = true;
 	//if fruit is eaten
 	if (snakeX == fruitX && snakeY == fruitY)
