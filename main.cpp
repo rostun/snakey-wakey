@@ -41,7 +41,7 @@ void Draw()
 			for (int tail = 0; tail < score; tail++)
 			{
 				if (colx == tailX[tail] && rowy == tailY[tail])
-					symbol = '-';
+					symbol = '+';
 			}
 			//border
 			if (colx == 0 || colx == width + 1)
@@ -65,6 +65,7 @@ void Draw()
 	cout << "Score: " << score << endl;
 	cout << "[SNAKE] rowx: " << snakeX << " [SNAKE] coly: " << snakeY << endl;
 	cout << "[FRUIT] rowx: " << fruitX << " [FRUIT] coly: " << fruitY << endl;
+	cout << "[TAILX-1]: " << tailX[0] << " [TAILY-1]: " << tailY[0] << endl;
 }
 void Input()
 {
@@ -74,6 +75,10 @@ void Input()
 		{
 			case 'a':
 				dir = eDirection::LEFT;
+				for (int t = 0; t < score; t++)
+				{
+					tailX[t]++;
+				}
 				break;
 			case 'w':
 				dir = eDirection::UP;
@@ -92,6 +97,10 @@ void Input()
 }
 void Logic()
 {
+	//if bounds are hit
+	if (snakeX > width || snakeY > height || snakeX < 1 || snakeY < 1)
+		gameOver = true;
+	//move snake based on player direction
 	switch (dir)
 	{
 		case eDirection::LEFT:
@@ -109,9 +118,6 @@ void Logic()
 		default:
 			break;
 	}
-	//if bounds are hit
-	if (snakeX > width || snakeY > height || snakeX < 1 || snakeY < 1)
-		gameOver = true;
 	//if fruit is eaten
 	if (snakeX == fruitX && snakeY == fruitY)
 	{
@@ -119,6 +125,24 @@ void Logic()
 		tailY[score] = fruitY;
 		score++;
 		_generateFruit();
+	}
+	//move tail based on player direction
+	switch (dir)
+	{
+		case eDirection::LEFT:
+			for (int t = 0; t < score; t++)
+			{
+				cout << tailX[t] << endl;
+			}
+			break;
+		case eDirection::UP:
+			break;
+		case eDirection::RIGHT:
+			break;
+		case eDirection::DOWN:
+			break;
+		default:
+			break;
 	}
 }
 
