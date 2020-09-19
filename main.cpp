@@ -75,10 +75,6 @@ void Input()
 		{
 			case 'a':
 				dir = eDirection::LEFT;
-				for (int t = 0; t < score; t++)
-				{
-					tailX[t]++;
-				}
 				break;
 			case 'w':
 				dir = eDirection::UP;
@@ -132,12 +128,16 @@ void Logic()
 		case eDirection::LEFT:
 			for (int t = 0; t < score; t++)
 			{
-				cout << tailX[t] << endl;
+				tailX[t]--;
 			}
 			break;
 		case eDirection::UP:
 			break;
 		case eDirection::RIGHT:
+			for (int t = 0; t < score; t++)
+			{
+				tailX[t]++;
+			}
 			break;
 		case eDirection::DOWN:
 			break;
