@@ -5,7 +5,7 @@ using namespace std;
 bool gameOver;
 const int width = 20;
 const int height = 10;
-int snakeX, snakeY, fruitX, fruitY, score;
+int snakeX, snakeY, fruitX, fruitY, score, fruitEatenDelay;
 int tailX[100], tailY[100];
 enum class eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
 eDirection dir;
@@ -23,6 +23,7 @@ void Setup()
 	snakeX = width / 2;
 	snakeY = height / 2;
 	score = 0;
+	fruitEatenDelay = 0;
 	_generateFruit();
 }
 void Draw()
@@ -65,7 +66,6 @@ void Draw()
 	cout << "Score: " << score << endl;
 	cout << "[SNAKE] rowx: " << snakeX << " [SNAKE] coly: " << snakeY << endl;
 	cout << "[FRUIT] rowx: " << fruitX << " [FRUIT] coly: " << fruitY << endl;
-	cout << "[TAILX-1]: " << tailX[0] << " [TAILY-1]: " << tailY[0] << endl;
 }
 void Input()
 {
@@ -93,6 +93,8 @@ void Input()
 }
 void Logic()
 {
+	if(fruitEatenDelay != 0)
+		fruitEatenDelay--;
 	//if bounds are hit
 	if (snakeX > width || snakeY > height || snakeX < 1 || snakeY < 1)
 		gameOver = true;
@@ -120,29 +122,25 @@ void Logic()
 		tailX[score] = fruitX;
 		tailY[score] = fruitY;
 		score++;
+		fruitEatenDelay += 2;
 		_generateFruit();
 	}
 	//move tail based on player direction
-	switch (dir)
+	//0 1 2 3 4 5
+	//0 1 2 3 4 5
+	//x = tailx[x-1]
+	//y = taily[y-1]
+	if (fruitEatenDelay == 0)
 	{
-		case eDirection::LEFT:
-			for (int t = 0; t < score; t++)
-			{
-				tailX[t]--;
-			}
-			break;
-		case eDirection::UP:
-			break;
-		case eDirection::RIGHT:
-			for (int t = 0; t < score; t++)
-			{
-				tailX[t]++;
-			}
-			break;
-		case eDirection::DOWN:
-			break;
-		default:
-			break;
+		//the head
+		int x = fruitX;
+		int y = fruitY;
+		//tailX[0] = tailX[1]
+		//tailY[0] = tailY[1]
+		for (int t = 0; t < score; t++)
+		{
+			tailX[t]--;
+		}
 	}
 }
 
