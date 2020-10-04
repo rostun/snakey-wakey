@@ -93,11 +93,24 @@ void Input()
 }
 void Logic()
 {
+	//remove counter if fruit eaten last turn
 	if(fruitEatenDelay != 0)
 		fruitEatenDelay--;
 	//if bounds are hit
 	if (snakeX > width || snakeY > height || snakeX < 1 || snakeY < 1)
 		gameOver = true;
+	//move tail based on player direction
+	if (fruitEatenDelay == 0)
+	{
+		//the head
+		int x = snakeX;
+		int y = snakeY;
+		for (int t = 0; t < score; t++)
+		{
+			tailX[t] = x;
+			tailY[t] = y;
+		}
+	}
 	//move snake based on player direction
 	switch (dir)
 	{
@@ -124,23 +137,6 @@ void Logic()
 		score++;
 		fruitEatenDelay += 2;
 		_generateFruit();
-	}
-	//move tail based on player direction
-	//0 1 2 3 4 5
-	//0 1 2 3 4 5
-	//x = tailx[x-1]
-	//y = taily[y-1]
-	if (fruitEatenDelay == 0)
-	{
-		//the head
-		int x = fruitX;
-		int y = fruitY;
-		//tailX[0] = tailX[1]
-		//tailY[0] = tailY[1]
-		for (int t = 0; t < score; t++)
-		{
-			tailX[t]--;
-		}
 	}
 }
 
