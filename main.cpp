@@ -102,13 +102,18 @@ void Logic()
 	//move tail based on player direction
 	if (fruitEatenDelay == 0)
 	{
-		//the head
-		int x = snakeX;
-		int y = snakeY;
-		for (int t = 0; t < score; t++)
+		int prevX = snakeX;
+		int prevY = snakeY;
+
+		//move each coordinate to next
+		for (int t = 0; t < score - 1; t++)
 		{
-			tailX[t] = x;
-			tailY[t] = y;
+			int currX = tailX[t];
+			int currY = tailY[t];
+			tailX[t] = prevX;
+			tailY[t] = prevY;
+			prevX = currX;
+			prevY = currY;
 		}
 	}
 	//move snake based on player direction
