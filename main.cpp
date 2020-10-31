@@ -2,10 +2,10 @@
 #include <conio.h>
 
 using namespace std;
-bool gameOver;
+bool gameOver, justAteFruit;
 const int width = 20;
 const int height = 10;
-int snakeX, snakeY, fruitX, fruitY, score, fruitEatenDelay;
+int snakeX, snakeY, prevSnakeX, prevSnakeY, fruitX, fruitY, score;
 int tailX[100], tailY[100];
 enum class eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
 eDirection dir;
@@ -22,8 +22,10 @@ void Setup()
 	dir = eDirection::STOP;
 	snakeX = width / 2;
 	snakeY = height / 2;
+	prevSnakeX = snakeX;
+	prevSnakeY = snakeY;
+	justAteFruit = false;
 	score = 0;
-	fruitEatenDelay = 0;
 	_generateFruit();
 }
 void Draw()
@@ -64,8 +66,13 @@ void Draw()
 	//score
 	cout << endl;
 	cout << "Score: " << score << endl;
-	cout << "[SNAKE] rowx: " << snakeX << " [SNAKE] coly: " << snakeY << endl;
 	cout << "[FRUIT] rowx: " << fruitX << " [FRUIT] coly: " << fruitY << endl;
+	cout << "[SNAKE] rowx: " << snakeX << " [SNAKE] coly: " << snakeY << endl;
+	cout << "[P_SNAKE] rowx: " <<  prevSnakeX << " [P_SNAKE] coly: " << prevSnakeY << endl;
+	for (int place = 0; place < score; place++)
+	{
+		cout << "[TAIL] [" << place << "] [X]: " << tailX[place] << " [Y]: " << tailY[place] << endl;
+	}
 }
 void Input()
 {
@@ -93,29 +100,14 @@ void Input()
 }
 void Logic()
 {
-	//remove counter if fruit eaten last turn
-	if(fruitEatenDelay != 0)
-		fruitEatenDelay--;
 	//if bounds are hit
 	if (snakeX > width || snakeY > height || snakeX < 1 || snakeY < 1)
 		gameOver = true;
-	//move tail based on player direction
-	if (fruitEatenDelay == 0)
-	{
-		int prevX = snakeX;
-		int prevY = snakeY;
 
-		//move each coordinate to next
-		for (int t = 0; t < score - 1; t++)
-		{
-			int currX = tailX[t];
-			int currY = tailY[t];
-			tailX[t] = prevX;
-			tailY[t] = prevY;
-			prevX = currX;
-			prevY = currY;
-		}
-	}
+	//store snake
+	prevSnakeX = snakeX;
+	prevSnakeY = snakeY;
+
 	//move snake based on player direction
 	switch (dir)
 	{
@@ -140,8 +132,29 @@ void Logic()
 		tailX[score] = fruitX;
 		tailY[score] = fruitY;
 		score++;
-		fruitEatenDelay += 2;
+		justAteFruit = true;
 		_generateFruit();
+	}
+	else if (justAteFruit == false)
+	{
+		//move tail based on player direction
+		int prevX = prevSnakeX;
+		int prevY = prevSnakeY;
+
+		//move each coordinate to next
+		for (int t = 0; t < score; t++)
+		{
+			int currX = tailX[t];
+			int currY = tailY[t];
+			tailX[t] = prevX;
+			tailY[t] = prevY;
+			prevX = currX;
+			prevY = currY;
+		}
+	}
+	else 
+	{
+		justAteFruit = false;
 	}
 }
 
