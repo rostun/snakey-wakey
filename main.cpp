@@ -2,7 +2,7 @@
 #include <conio.h>
 
 using namespace std;
-bool gameOver, justAteFruit;
+bool gameOver;
 const int width = 20;
 const int height = 10;
 int snakeX, snakeY, prevSnakeX, prevSnakeY, fruitX, fruitY, score;
@@ -24,7 +24,6 @@ void Setup()
 	snakeY = height / 2;
 	prevSnakeX = snakeX;
 	prevSnakeY = snakeY;
-	justAteFruit = false;
 	score = 0;
 	_generateFruit();
 }
@@ -126,35 +125,29 @@ void Logic()
 		default:
 			break;
 	}
+	
+	//move tail based on player direction
+	int prevX = prevSnakeX;
+	int prevY = prevSnakeY;
+
+	//move each coordinate to next
+	for (int t = 0; t < score; t++)
+	{
+		int currX = tailX[t];
+		int currY = tailY[t];
+		tailX[t] = prevX;
+		tailY[t] = prevY;
+		prevX = currX;
+		prevY = currY;
+	}
+
 	//if fruit is eaten
 	if (snakeX == fruitX && snakeY == fruitY)
 	{
 		tailX[score] = fruitX;
 		tailY[score] = fruitY;
 		score++;
-		justAteFruit = true;
 		_generateFruit();
-	}
-	else if (justAteFruit == false)
-	{
-		//move tail based on player direction
-		int prevX = prevSnakeX;
-		int prevY = prevSnakeY;
-
-		//move each coordinate to next
-		for (int t = 0; t < score; t++)
-		{
-			int currX = tailX[t];
-			int currY = tailY[t];
-			tailX[t] = prevX;
-			tailY[t] = prevY;
-			prevX = currX;
-			prevY = currY;
-		}
-	}
-	else 
-	{
-		justAteFruit = false;
 	}
 }
 
