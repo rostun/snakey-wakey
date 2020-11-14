@@ -27,6 +27,18 @@ void Setup()
 	score = 0;
 	_generateFruit();
 }
+void Debug()
+{
+	cout << endl;
+	cout << "Score: " << score << endl;
+	cout << "[FRUIT] rowx: " << fruitX << " [FRUIT] coly: " << fruitY << endl;
+	cout << "[SNAKE] rowx: " << snakeX << " [SNAKE] coly: " << snakeY << endl;
+	cout << "[P_SNAKE] rowx: " << prevSnakeX << " [P_SNAKE] coly: " << prevSnakeY << endl;
+	for (int place = 0; place < score; place++)
+	{
+		cout << "[TAIL] [" << place << "] [X]: " << tailX[place] << " [Y]: " << tailY[place] << endl;
+	}
+}
 void Draw()
 {
 	system("cls");
@@ -62,16 +74,8 @@ void Draw()
 	{
 		cout << "#";
 	}	
-	//score
-	cout << endl;
-	cout << "Score: " << score << endl;
-	cout << "[FRUIT] rowx: " << fruitX << " [FRUIT] coly: " << fruitY << endl;
-	cout << "[SNAKE] rowx: " << snakeX << " [SNAKE] coly: " << snakeY << endl;
-	cout << "[P_SNAKE] rowx: " <<  prevSnakeX << " [P_SNAKE] coly: " << prevSnakeY << endl;
-	for (int place = 0; place < score; place++)
-	{
-		cout << "[TAIL] [" << place << "] [X]: " << tailX[place] << " [Y]: " << tailY[place] << endl;
-	}
+
+	Debug();
 }
 void Input()
 {
@@ -99,15 +103,18 @@ void Input()
 }
 void Logic()
 {
-	//if bounds are hit
-	if (snakeX > width || snakeY > height || snakeX < 1 || snakeY < 1)
-		gameOver = true;
+	//if snake head overlaps body and it's not a fruit
+	//for (int t = 0; t < score; t++)
+	//{
+	//	if (snakeX == tailX[t] && snakeY == tailY[t] && snakeX != fruitX && snakeY != fruitY)
+	//		gameOver = true;
+	//}
 
-	//store snake
+	//store snake head position
 	prevSnakeX = snakeX;
 	prevSnakeY = snakeY;
 
-	//move snake based on player direction
+	//change snake head position based on player direction
 	switch (dir)
 	{
 		case eDirection::LEFT:
@@ -125,7 +132,7 @@ void Logic()
 		default:
 			break;
 	}
-	
+
 	//move tail based on player direction
 	int prevX = prevSnakeX;
 	int prevY = prevSnakeY;
@@ -148,6 +155,13 @@ void Logic()
 		tailY[score] = fruitY;
 		score++;
 		_generateFruit();
+	}
+
+	//if bounds are hit
+	if (snakeX > width || snakeY > height || snakeX < 1 || snakeY < 1)
+	{
+		Draw();
+		gameOver = true;
 	}
 }
 
