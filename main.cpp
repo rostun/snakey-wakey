@@ -103,13 +103,6 @@ void Input()
 }
 void Logic()
 {
-	//if snake head overlaps body and it's not a fruit
-	//for (int t = 0; t < score; t++)
-	//{
-	//	if (snakeX == tailX[t] && snakeY == tailY[t] && snakeX != fruitX && snakeY != fruitY)
-	//		gameOver = true;
-	//}
-
 	//store snake head position
 	prevSnakeX = snakeX;
 	prevSnakeY = snakeY;
@@ -136,6 +129,16 @@ void Logic()
 	//move tail based on player direction
 	int prevX = prevSnakeX;
 	int prevY = prevSnakeY;
+
+	//if snake head overlaps body and it's not a fruit
+	for (int t = 0; t < score; t++)
+	{
+		if (snakeX == tailX[t] && snakeY == tailY[t])
+		{
+			Draw();
+			gameOver = true;
+		}
+	}
 
 	//move each coordinate to next
 	for (int t = 0; t < score; t++)
