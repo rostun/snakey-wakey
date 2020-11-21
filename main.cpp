@@ -1,14 +1,31 @@
 #include <iostream>
-#include <conio.h>
+#include <conio.h> //input
+#include <vector>
 
 using namespace std;
+
 bool gameOver;
-const int width = 20;
-const int height = 10;
-int snakeX, snakeY, prevSnakeX, prevSnakeY, fruitX, fruitY, score;
-int tailX[100], tailY[100];
-enum class eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
+const int width = 20, height = 10;
+int snakeX, snakeY, 
+	prevSnakeX, prevSnakeY, 
+	fruitX, fruitY, 
+	tailX[100], tailY[100],
+	score;
+enum class eDirection 
+{ 
+	STOP = 0, 
+	LEFT, 
+	RIGHT, 
+	UP, 
+	DOWN 
+};
+struct Coordinate
+{
+	int x, y;
+};
+
 eDirection dir;
+vector<Coordinate> availableSpaces;
 
 void _generateFruit()
 {
@@ -26,6 +43,8 @@ void Setup()
 	prevSnakeY = snakeY;
 	score = 0;
 	_generateFruit();
+
+
 }
 void Debug()
 {
