@@ -1,10 +1,10 @@
 #include <iostream>
 #include <conio.h> //input
-#include <vector>
 
 using namespace std;
 
-bool gameOver;
+bool gameOver,
+	availableX[20], availableY[10];
 const int width = 20, height = 10;
 int snakeX, snakeY, 
 	prevSnakeX, prevSnakeY, 
@@ -19,16 +19,15 @@ enum class eDirection
 	UP, 
 	DOWN 
 };
-struct Coordinate
-{
-	int x, y;
-};
 
 eDirection dir;
-vector<Coordinate> availableSpaces;
 
 void _generateFruit()
 {
+	//rand fruitX with availableX
+	//rand fruitX with availableY
+	//remove X from availableX if applicable
+	//remove Y from availableY if applicable
 	fruitX = rand() % width + 1;
 	fruitY = rand() % height + 1;
 }
@@ -43,7 +42,8 @@ void Setup()
 	prevSnakeY = snakeY;
 	score = 0;
 	_generateFruit();
-
+	//set up available X
+	//set up available Y
 
 }
 void Debug()
