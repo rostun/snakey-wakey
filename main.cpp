@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h> //input
+#include <time.h> //true random number
 
 using namespace std;
 
@@ -34,6 +35,7 @@ void _generateFruit()
 
 void Setup()
 {
+	srand(time(NULL));
 	gameOver = false;
 	dir = eDirection::STOP;
 	snakeX = width / 2;
@@ -41,9 +43,13 @@ void Setup()
 	prevSnakeX = snakeX;
 	prevSnakeY = snakeY;
 	score = 0;
+	for (int i = 0; i < 20; i++) {
+		availableX[i] = true;
+	}
+	for (int i = 0; i < 10; i++) {
+		availableY[i] = true;
+	}
 	_generateFruit();
-	//set up available X
-	//set up available Y
 
 }
 void Debug()
