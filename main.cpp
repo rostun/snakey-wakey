@@ -1,11 +1,18 @@
 #include <iostream>
 #include <conio.h> //input
 #include <time.h> //true random number
+#include <vector>
 
 using namespace std;
 
-bool gameOver,
-	availableX[20], availableY[10];
+struct Point
+{
+	int X, Y;
+};
+std::vector<Point> availableXY;
+std::vector<Point> nonavailableXY;
+
+bool gameOver;
 const int width = 20, height = 10;
 int snakeX, snakeY, 
 	prevSnakeX, prevSnakeY, 
@@ -25,10 +32,6 @@ eDirection dir;
 
 void _generateFruit()
 {
-	//rand fruitX with availableX
-	//rand fruitX with availableY
-	//remove X from availableX if applicable
-	//remove Y from availableY if applicable
 	fruitX = rand() % width + 1;
 	fruitY = rand() % height + 1;
 }
@@ -43,12 +46,16 @@ void Setup()
 	prevSnakeX = snakeX;
 	prevSnakeY = snakeY;
 	score = 0;
-	for (int i = 0; i < 20; i++) {
-		availableX[i] = true;
+	
+	//fill in available and non available coordinates
+	for (int x = 1; x < 21; x++) {
+		for (int y = 1; y < 11; y++) {
+			struct Point p = { x, y };
+			(x == snakeX && y == snakeY) ? nonavailableXY.push_back(p) : availableXY.push_back(p);
+		}
 	}
-	for (int i = 0; i < 10; i++) {
-		availableY[i] = true;
-	}
+
+	//generate fruit within available coordinates
 	_generateFruit();
 
 }
